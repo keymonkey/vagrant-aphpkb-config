@@ -10,6 +10,14 @@ apt-get install git -y > /dev/null
 echo "Installing Nginx"
 apt-get install nginx -y > /dev/null
 
+# Subversion
+echo "Installing Subversion"
+apt-get install subversion -y > /dev/null
+
+#aphpkb
+echo "Installing Aphpkb"
+svn checkout https://svn.code.sf.net/p/aphpkb/code/ aphpkb-code
+
 # PHP
 echo "Updating PHP repository"
 apt-get install python-software-properties build-essential -y > /dev/null
