@@ -1,7 +1,7 @@
 Vagrant.configure("2") do |config|
 	
 	# Specify the base box
-	config.vm.box = "primalskill/ubuntu-trusty64"
+	config.vm.box = "ubuntu/xenial64"
 	
 	# Setup port forwarding
 	config.vm.network :forwarded_port, guest: 80, host: 8931, auto_correct: true
@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
 
     # VM specific configs
     config.vm.provider "virtualbox" do |v|
-    	v.name = "SitePoint Test Vagrant"
+    	v.name = "Aphpkb Vagrant"
     	v.customize ["modifyvm", :id, "--memory", "1024"]
     end
 
