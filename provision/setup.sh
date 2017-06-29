@@ -17,18 +17,22 @@ apt-get install subversion -y > /dev/null
 #aphpkb
 echo "Installing Aphpkb"
 svn checkout https://svn.code.sf.net/p/aphpkb/code/ aphpkb-code
+cd /home/ubuntu/
+svn export aphpkb-code /var/www/src/aphpkb
 
 # PHP
-echo "Updating PHP repository"
-apt-get install python-software-properties build-essential -y > /dev/null
-add-apt-repository ppa:ondrej/php5 -y > /dev/null
-apt-get update > /dev/null
+#echo "Updating PHP repository"
+#apt-get install python-software-properties build-essential -y > /dev/null
+#add-apt-repository ppa:ondrej/php5 -y > /dev/null
+#apt-get update > /dev/null
 
-echo "Installing PHP"
-apt-get install php5-common php5-dev php5-cli php5-fpm -y > /dev/null
+#echo "Installing PHP"
+#apt-get install php5-common php5-dev php5-cli php5-fpm -y > /dev/null
 
-echo "Installing PHP extensions"
-apt-get install curl php5-curl php5-gd php5-mcrypt php5-mysql -y > /dev/null
+#echo "Installing PHP extensions"
+#apt-get install curl php5-curl php5-gd php5-mcrypt php5-mysql -y > /dev/null
+
+#had to muck about with this manually, installing php7 instead of php5
 
 # MySQL 
 echo "Preparing MySQL"
