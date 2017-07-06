@@ -6,33 +6,28 @@ echo "Provisioning virtual machine..."
 echo "Installing Git"
 apt-get install git -y > /dev/null
 
-# Nginx
-echo "Installing Nginx"
-apt-get install nginx -y > /dev/null
-
 # Subversion
 echo "Installing Subversion"
 apt-get install subversion -y > /dev/null
 
 #aphpkb
-echo "Installing Aphpkb"
+echo "Checking out Aphpkb"
 svn checkout https://svn.code.sf.net/p/aphpkb/code/ aphpkb-code
-cd /home/ubuntu/
-svn export aphpkb-code /var/www/src/aphpkb
 
-# PHP
-#echo "Updating PHP repository"
-#apt-get install python-software-properties build-essential -y > /dev/null
-#add-apt-repository ppa:ondrej/php5 -y > /dev/null
-#apt-get update > /dev/null
 
-#echo "Installing PHP"
-#apt-get install php5-common php5-dev php5-cli php5-fpm -y > /dev/null
+# PHP & Apache2
+echo "Installing PHP & Apache2"
+apt-get update > /dev/null
+apt-get -y install apache2
+apt-get -y install php7.0 libapache2-mod-php7.0
+systemctl restart apache2
 
-#echo "Installing PHP extensions"
-#apt-get install curl php5-curl php5-gd php5-mcrypt php5-mysql -y > /dev/null
+echo "Installing PHP extensions"
+apt-get -y install php7.0-mysql php7.0-curl php7.0-gd php7.0-intl php-pear php-imagick php7.0-imap php7.0-mcrypt php-memcache  php7.0-pspell php7.0-recode php7.0-sqlite3 php7.0-tidy php7.0-xmlrpc php7.0-xsl php7.0-mbstring php-gettext
 
-#had to muck about with this manually, installing php7 instead of php5
+#Exporting aphpkb to DocumentRoot
+echo 'Installing Aphpkb to DocRoot'
+svn export aphpkb-code /var/www/html/aphpkb
 
 # MySQL 
 echo "Preparing MySQL"
@@ -43,14 +38,9 @@ debconf-set-selections <<< "mysql-server mysql-server/root_password_again passwo
 echo "Installing MySQL"
 apt-get install mysql-server -y > /dev/null
 
-# Nginx Configuration
-echo "Configuring Nginx"
-cp /var/www/provision/config/nginx_vhost /etc/nginx/sites-available/nginx_vhost > /dev/null
-ln -s /etc/nginx/sites-available/nginx_vhost /etc/nginx/sites-enabled/
+sudo mysql -e "CREATE DATABASE IF NOT EXISTS akb_ubuntu; CREATE USER 'ubuntu'@'%' IDENTIFIED BY 'ubuntu'; GRANT ALL PRIVILEGES ON akb_ubuntu.* TO 'ubuntu'@'%'; FLUSH PRIVILEGES;" --password=1234
 
-rm -rf /etc/nginx/sites-available/default
-
-# Restart Nginx for the config to take effect
-service nginx restart > /dev/null
+sudo mysql -e -u -p ubuntu -u ubuntu akb_ubuntu < /var/www/html/aphpkb/docs/akb.sql 
 
 echo "Finished provisioning."
+
