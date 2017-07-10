@@ -39,8 +39,7 @@ echo "Installing MySQL"
 apt-get install mysql-server -y > /dev/null
 
 sudo mysql -e "CREATE DATABASE IF NOT EXISTS akb_ubuntu; CREATE USER 'ubuntu'@'%' IDENTIFIED BY 'ubuntu'; GRANT ALL PRIVILEGES ON akb_ubuntu.* TO 'ubuntu'@'%'; FLUSH PRIVILEGES;" --password=1234
-
-sudo mysql -e -pubuntu -u ubuntu akb_ubuntu < /var/www/html/aphpkb/docs/akb.sql 
+sudo mysql --host=localhost --user=root --password=1234 akb_ubuntu < /var/www/html/aphpkb/docs/akb.sql
 
 echo "Finished provisioning."
 
