@@ -8,10 +8,13 @@ Vagrant.configure("2") do |config|
 
     # Setup synced folder
     config.vm.synced_folder "./", "/var/www", create: true, group: "www-data", owner: "www-data"
-
+    
+    # Setup synced dev folder
+    config.vm.synced_folder "./dev", "/home/ubuntu/", create: true, group: "ubuntu", owner: "ubuntu"
+	
     # VM specific configs
     config.vm.provider "virtualbox" do |v|
-    	v.name = "Aphpkb Vagrant"
+    	v.name = "Aphpkb Dev Vagrant"
     	v.customize ["modifyvm", :id, "--memory", "1024"]
     end
 
